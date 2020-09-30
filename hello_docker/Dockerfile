@@ -15,3 +15,4 @@ COPY src/ .
 
 # command to run on container start
 CMD [ "python", "./app.py" ]
+
