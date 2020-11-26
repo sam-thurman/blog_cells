@@ -100,3 +100,68 @@ SELECT Client_Name, Country_Name
     INNER JOIN countries
     ON clients.Country_ID = countries.Country_ID;
 ```
+
+
+Example JOINs for tutorial
+INNER
+- Sales would like a list of current orders that need filled. Return a dataset containing `Client_Name`, `Product_Name`, and `Quantity` for all current orders (any order still in our `orders` table is considered outstanding).
+```
+SELECT Client_Name, Product_Name, Quantity
+   FROM orders o
+   INNER JOIN products p
+   ON o.Product_Code = p.Product_Code;
+
+# output
+Paddy's Pub|Hand Sanitizer 8oz.|20
+Stay Puft|N65 Mask (20ct)|5
+Bubbles' Shed n' Breakfast|Small Plastic Drum (5 gal)|5
+Bubbles' Shed n' Breakfast|Large Plastic Drum (20 gal)|2
+Universal Exports|Powder Free Latex Gloves (200ct)|100
+Han's Garage|N65 Mask (20ct)|20
+Paddy's Pub|N65 Mask (20ct)|1
+```
+
+- Marketing would like to send holiday cards to our current customers. Return a dataset containing the names (`Client_Name`) of all of our current customers and their home countries (`Country_Name`)
+```
+SELECT Client_Name, Country_Name
+   FROM clients cl
+   INNER JOIN countries co
+   ON cl.Country_ID = co.Country_ID;
+
+# output
+Paddy's Pub|United States
+Universal Exports|United Kingdom
+Bubbles' Shed n' Breakfast|Canada
+Stay Puft|United States
+Han's Garage|Japan
+```
+
+- Due to a manufacturing error, all shipments of "Large Plastic Drums" will be delayed. We need to notify our customers of this delay, so our Sales Department has asked for a list of every client (`Client_Name`) that has a current outstanding order for large plastic drums.
+```
+SELECT Client_Name
+   FROM orders o
+   INNER JOIN products p
+   ON o.Product_Code = p.Product_Code
+   WHERE Product_Name = "Large Plastic Drum (20 gal)";
+
+# output
+Bubbles' Shed n' Breakfast
+```
+
+- _Challenge_: Our Shipping Department has been optimizing how they make deliveries. They would now like to ship orders out in groups by country. Return a list of countries that currently have unfilled orders (`Country_Name`) and the number of orders that need to be delivered to that country. (note: you'll need to use more than one `JOIN`, and a couple built-in functions)
+```
+SELECT Country_Name, COUNT(o.Client_Name)
+   FROM countries co
+   INNER JOIN clients cl
+   ON co.Country_ID = cl.Country_ID
+   INNER JOIN orders o
+   ON cl.Client_Name = o.Client_Name
+   WHERE co.Country_ID = cl.Country_ID
+   GROUP BY Country_Name;
+
+# output
+Canada|2
+Japan|1
+United Kingdom|1
+United States|3
+```
