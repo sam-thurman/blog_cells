@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.pythonPath": "/Users/sam/opt/anaconda3/envs/learn-env/bin/python",
+    "python.linting.flake8Enabled": true
+}
