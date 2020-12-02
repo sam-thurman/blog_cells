@@ -3,29 +3,30 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
-
-# export an external stylesheet, will be CSS code
+print(__name__)
+# import an external stylesheet, will be a CSS file
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-# set up the reference to our Dash Application and link external style
+# set up the reference to our Dash Application and link to external style
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
+# create some data to plot
 df = pd.DataFrame({
-    "Product": ["Case (128 cans) Beer", "Apples", "Oranges", "Bananas", "Lemons", "Oranges", "Bananas"],
-    "Amount": [10, 12, 12, 10, 15, 13, 5],
-    "Store": ["Paddy's Pub", "Bubbles' Shed n' Breakfast", "Bubbles' Shed n' Breakfast", "Paddy's Pub", "Paddy's Pub", "Paddy's Pub", "Bubbles' Shed n' Breakfast"]
+    "Fruit":["Apple", "Orange", "Banana", "Orange", "Peach", "Apple", "Peach", "Banana"],
+    "Amount":[3, 6, 2, 4, 6, 5, 7, 2],
+    "Store":["Bob's Cornerstore", "Jenny's Convenience", "Jenny's Convenience", "Bob's Cornerstore", "Bob's Cornerstore", "Jenny's Convenience", "Jenny's Convenience", "Bob's Cornerstore"]
 })
 
-fig = px.bar(df, x="Product", y="Amount", color="Store", barmode="group")
+# create bar plot from our newly created data
+# see https://plotly.com/python/px-arguments/ for more options
+fig = px.bar(df, x="Fruit", y="Amount", color="Store", barmode="group")
 
-# Layout, will hold all of our application "structure"
+# LAYOUT, will hold all of our application "structure"
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+    html.H1(children='My First Dash App'),
 
     html.Div(children='''
-        Dash: A web application framework for Python.
+        Dash: A web-app framework for Python.
     '''),
 
     dcc.Graph(
