@@ -7,12 +7,16 @@ import plotly.express as px
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+# load gapminder data
 data = px.data.gapminder()
 
+# grab data for United States
 USA = data[data.country=='United States']
 
+#list of columns we want
 cols = ['lifeExp', 'pop', 'gdpPercap']
 
+# dash needs Dropdown 'options' to be in {'label': 'option name', 'value': option-value} format
 dropdown_options = [{'label':col,'value':col} for col in cols]
 
 app.layout = html.Div(children=[
@@ -25,24 +29,10 @@ app.layout = html.Div(children=[
 
     dcc.Dropdown(
         id='dropdown',
-        options=dropdown_options,
-        value='pop'
+        options=dropdown_options, # options in list, properly formatted
+        value='pop' # we can set a default value
     )
 ])
-
-
-@app.callback(
-    Output('graph','figure'),
-    [Input('dropdown', 'value')]
-)
-def update_graph(prop):
-    fig = px.line(
-        USA,
-        x='year',
-        y=prop,
-        title=f'United States {prop} over time'
-    )
-    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
