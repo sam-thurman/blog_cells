@@ -42,7 +42,48 @@ AssertionError: Should be a list
 - A test runner is the library or tool that picks up an assembly (or a source code directory) that contains unit tests and settings, executes them, and writes tehe test results to either the console or log files
 - there are a myriad of test runners available for Python
 - some examples of testing libraries
+
   - `unittest` -- built into Python
   - `nose`/`nose2`
   - `pry`
   - `pytest` -- our choice for today
+
+- test runners, sometimes referred to as _testing frameworks_, typically hook into your test's assertions so that they can provide information when an assertion fails.
+- `uninttest`, for example, provides a number of helpful out-of-the-box assertion utilities
+  - the downside to frameworks like `unittest` is that even a small set of tests requires a fair amount of boilerplate code.
+- for example, if we simply wanted to make sure framework was functioning properly, we could write two tests: one that always passes, and one that always fails.
+  To do this using `unittest`, we'd need the following code:
+
+```
+# file name test_using_unitest.py
+from unittest import TestCase
+
+class TryTesting(TestCase):
+    def test_always_passes(self):
+        self.assertTrue(True)
+
+    def test_always_fails(self):
+        self.assertTrue(False)
+```
+
+We would then execute the tests with the following `unittest` command
+
+```
+python -m unittest discover
+```
+
+Which would give us our expected one pass, one fail result
+
+```
+FAIL: test_always_fails (test_with_unittest.TryTesting)
+------------------------------------------------------------
+Traceback (most recent call last):
+  File "/.../test_with_unittest.py", line 9, in test_always_fails
+    self.assertTrue(False)
+AssertionError: False is not True
+
+------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=1)
+```
