@@ -1,0 +1,1 @@
+Functioning like if-else statements, CASE statements cycle through conditions and return a value for the first condition that evaluates to true. Once a condition is met, the CASE statement stops reading conditions and returns a result. If no conditions are met, the value in the ELSE clause is returned.
